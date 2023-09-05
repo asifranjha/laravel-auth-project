@@ -23,6 +23,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['user_check'])->group(function () {
     Route::get('/profile', [AuthController::class, 'profile_view'])->name('profile.view');
+    Route::post('/users/search', [AuthController::class, 'search_users'])->name('user.search');
 });
 
 

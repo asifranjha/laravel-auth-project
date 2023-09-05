@@ -63,7 +63,12 @@ class AuthController extends Controller
 
     public function profile_view()
     {
-        return view('profile');
+
+        $users = User::get();
+        
+        return view('profile', [
+            'users' => $users
+        ]);
     }
 
     public function logout()
@@ -73,6 +78,20 @@ class AuthController extends Controller
 
         // Redirect
         return to_route('login.view');
+    }
+
+
+    public function search_users(Request $request)
+    {
+        $keyword = $request->value;
+
+        $users = User::where('first_name', 'LIKE' ,'%'.$keyword.'%')
+            ->orWhere('last_name', 'LIKE', '%'.$keyword.'%')
+            ->orWhere('email', 'LIKE', '%'.$keyword.'%')
+            ->get();
+
+        return $users;
+
     }
 
 }
